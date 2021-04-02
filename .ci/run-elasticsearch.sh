@@ -7,7 +7,7 @@
 # Export the TEST_SUITE variable, eg. 'free' or 'platinum' defaults to 'free'.
 # Export the NUMBER_OF_NODES variable to start more than 1 node
 
-# Version 1.2.0
+# Version 1.3.0
 # - Initial version of the run-elasticsearch.sh script
 # - Deleting the volume should not dependent on the container still running
 # - Fixed `ES_JAVA_OPTS` config
@@ -15,6 +15,7 @@
 # - Refactored into functions and imports
 # - Support NUMBER_OF_NODES
 # - Added 5 retries on docker pull for fixing transient network errors
+# - Added action.destructive_requires_name=false as the default will be true in v8
 
 script_path=$(dirname $(realpath -s $0))
 source $script_path/functions/imports.sh
@@ -37,6 +38,7 @@ environment=($(cat <<-END
   --env node.attr.testattr=test
   --env path.repo=/tmp
   --env repositories.url.allowed_urls=http://snapshot.test*
+  --env action.destructive_requires_name=false
 END
 ))
 if [[ "$TEST_SUITE" == "platinum" ]]; then
@@ -127,5 +129,4 @@ END
   if wait_for_container "$es_node_name" "$network_name"; then
     echo -e "\033[32;1mSUCCESS:\033[0m Running on: $node_url\033[0m"
   fi
-
 done
