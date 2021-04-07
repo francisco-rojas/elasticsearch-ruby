@@ -85,14 +85,33 @@ namespace :test do
 
     puts 'Downloading artifacts file.'
     filename = CURRENT_PATH.join('tmp/artifacts.json')
-    `curl -s https://artifacts-api.elastic.co/v1/versions/#{version_number} -o #{filename}`
+
+    # Download with Ruby
+    begin
+      require 'open-uri'
+      File.open(filename, "w") do |downloaded_file|
+        URI.open("https://artifacts-api.elastic.co/v1/versions/#{version_number}", "rb") do |artifact_file|
+          downloaded_file.write(artifact_file.read)
+        end
+      end
+      puts "Successfully downloaded #{filename}"
+    rescue StandardError => e
+      STDERR.puts "[!] Failed to download artifact to #{filename}"
+      raise e
+      exit 1
+    end
 
     unless File.exists?(filename)
       STDERR.puts '[!] Couldn\'t download artifacts file'
       exit 1
     end
 
-    artifacts = JSON.parse(File.read(filename))
+    begin
+      artifacts = JSON.parse(File.read(filename))
+    rescue StandardError => e
+      STDERR.puts "[!] Couldn't read JSON file #{filename}"
+      exit 1
+    end
 
     build_hash_artifact = artifacts['version']['builds'].select do |a|
       a.dig('projects', 'elasticsearch', 'commit_hash') == build_hash
