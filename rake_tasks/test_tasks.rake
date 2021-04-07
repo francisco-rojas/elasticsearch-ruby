@@ -88,7 +88,7 @@ namespace :test do
 
     # Download with Ruby
     begin
-      puts Dir.mkdir(CURRENT_PATH.join('tmp'), 0700)
+      Dir.mkdir(CURRENT_PATH.join('tmp'), 0700)
       require 'open-uri'
       File.open(filename, "w") do |downloaded_file|
         URI.open("https://artifacts-api.elastic.co/v1/versions/#{version_number}", "rb") do |artifact_file|
@@ -120,18 +120,27 @@ namespace :test do
     # Dig into the elasticsearch packages, search for the rest-resources-zip package and catch the URL:
     zip_url = build_hash_artifact.dig('projects', 'elasticsearch', 'packages').select { |k,v| k =~ /rest-resources-zip/ }.map { | _, v| v['url'] }.first
 
-    filename = zip_url.split('/').last
+    filename = CURRENT_PATH.join("tmp/#{zip_url.split('/').last}")
     puts 'Downloading zip file.'
-    `curl -s #{zip_url} -o tmp/#{filename}`
+    begin
+      File.open(filename, "w") do |downloaded_file|
+        URI.open(zip_url, "rb") do |artifact_file|
+          downloaded_file.write(artifact_file.read)
+        end
+      end
+      puts "Successfully downloaded #{filename}"
+      `curl -s #{zip_url} -o tmp/#{filename}`
+    end
 
-    unless File.exists?("./tmp/#{filename}")
+
+    unless File.exists?(filename)
       STDERR.puts '[!] Couldn\'t download artifact'
       exit 1
     end
 
     puts "Unzipping file #{filename}"
-    `unzip -o tmp/#{filename} -d tmp/`
-    `rm tmp/#{filename}`
+    `unzip -o #{filename} -d tmp/`
+    `rm #{filename}`
     puts 'Artifacts downloaded in ./tmp'
   end
 end
