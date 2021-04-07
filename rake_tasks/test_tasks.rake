@@ -88,6 +88,7 @@ namespace :test do
 
     # Download with Ruby
     begin
+      puts Dir.mkdir(CURRENT_PATH.join('tmp'), 0700)
       require 'open-uri'
       File.open(filename, "w") do |downloaded_file|
         URI.open("https://artifacts-api.elastic.co/v1/versions/#{version_number}", "rb") do |artifact_file|
