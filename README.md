@@ -1,5 +1,26 @@
 # Elasticsearch
 
+## Affinipay changes
+
+Build docker image
+```
+docker-compose build
+```
+Access the container:
+```
+docker-compose run es_ruby /bin/bash -l
+or
+docker run -it -v $PWD:/es_ruby elasticsearch-ruby_es_ruby /bin/bash -l
+```
+
+Run tests
+```
+TEST_CLUSTER_COMMAND=/usr/share/elasticsearch/bin/elasticsearch rake test:cluster:start
+time rake test:all
+```
+
+Elastic search 1.5 is located in `/usr/share/elasticsearch/bin/elasticsearch`
+
 This repository contains Ruby integrations for [Elasticsearch](http://elasticsearch.org):
 
 * a client for connecting to an Elasticsearch cluster,

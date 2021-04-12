@@ -1,0 +1,7 @@
+version: '3.9'
+services:
+  es_ruby:
+    build:
+      context: .
+    volumes:
+      - .:/es_ruby
