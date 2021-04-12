@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'elasticsearch/version'
 
 Gem::Specification.new do |s|
-  s.name          = "elasticsearch"
+  s.name          = "legacy_elasticsearch"
   s.version       = LegacyElasticsearch::VERSION
   s.authors       = ["Karel Minarik"]
   s.email         = ["karel.minarik@elasticsearch.org"]
@@ -20,8 +20,8 @@ Gem::Specification.new do |s|
   s.extra_rdoc_files  = [ "README.md", "LICENSE.txt" ]
   s.rdoc_options      = [ "--charset=UTF-8" ]
 
-  s.add_dependency "elasticsearch-transport", '1.1.3'
-  s.add_dependency "elasticsearch-api",       '1.1.3'
+  s.add_dependency "legacy-elasticsearch-transport", '1.1.3'
+  s.add_dependency "legacy-elasticsearch-api",       '1.1.3'
 
   s.add_development_dependency "bundler", "> 1"
 
@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
   end
 
   if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
-    s.add_development_dependency "elasticsearch-extensions"
+    s.add_development_dependency "legacy-elasticsearch-extensions"
   end
 
   s.add_development_dependency "ansi"

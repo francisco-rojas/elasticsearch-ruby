@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'elasticsearch/transport/version'
 
 Gem::Specification.new do |s|
-  s.name          = "elasticsearch-transport"
+  s.name          = "legacy-elasticsearch-transport"
   s.version       = LegacyElasticsearch::Transport::VERSION
   s.authors       = ["Karel Minarik"]
   s.email         = ["karel.minarik@elasticsearch.org"]
@@ -36,7 +36,7 @@ Gem::Specification.new do |s|
   end
 
   if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'
-    s.add_development_dependency "elasticsearch-extensions"
+    s.add_development_dependency "legacy-elasticsearch-extensions"
   end
 
   s.add_development_dependency "ansi"

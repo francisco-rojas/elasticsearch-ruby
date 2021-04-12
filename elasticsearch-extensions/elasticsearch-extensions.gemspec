@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'elasticsearch/extensions/version'
 
 Gem::Specification.new do |s|
-  s.name          = "elasticsearch-extensions"
+  s.name          = "legacy-elasticsearch-extensions"
   s.version       = LegacyElasticsearch::Extensions::VERSION
   s.authors       = ["Karel Minarik"]
   s.email         = ["karel.minarik@elasticsearch.org"]
@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency "ansi"
 
   unless File.exist? File.expand_path("../../elasticsearch/elasticsearch.gemspec", __FILE__)
-    s.add_dependency "elasticsearch"
+    s.add_dependency "legacy_elasticsearch"
   end
 
   if defined?(RUBY_VERSION) && RUBY_VERSION > '1.9'

@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'elasticsearch/dsl/version'
 
 Gem::Specification.new do |s|
-  s.name          = "elasticsearch-dsl"
+  s.name          = "legacy-elasticsearch-dsl"
   s.version       = LegacyElasticsearch::DSL::VERSION
   s.authors       = ["Karel Minarik"]
   s.email         = ["karel.minarik@elasticsearch.com"]
@@ -24,8 +24,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency "bundler", "~> 1.3"
   s.add_development_dependency "rake", "~> 11.1"
 
-  s.add_development_dependency "elasticsearch"
-  s.add_development_dependency "elasticsearch-extensions"
+  s.add_development_dependency "legacy_elasticsearch"
+  s.add_development_dependency "legacy-elasticsearch-extensions"
 
   s.add_development_dependency 'shoulda-context'
   s.add_development_dependency 'mocha'

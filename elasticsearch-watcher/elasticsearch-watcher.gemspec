@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'elasticsearch/watcher/version'
 
 Gem::Specification.new do |s|
-  s.name          = "elasticsearch-watcher"
+  s.name          = "legacy-elasticsearch-watcher"
   s.version       = LegacyElasticsearch::Watcher::VERSION
   s.authors       = ["Karel Minarik"]
   s.email         = ["karel.minarik@elasticsearch.org"]
@@ -18,13 +18,13 @@ Gem::Specification.new do |s|
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ["lib"]
 
-  s.add_dependency "elasticsearch-api"
+  s.add_dependency "legacy-elasticsearch-api"
 
   s.add_development_dependency "bundler", "~> 1.3"
   s.add_development_dependency "rake", "~> 11.1"
 
-  s.add_development_dependency "elasticsearch"
-  s.add_development_dependency "elasticsearch-extensions"
+  s.add_development_dependency "legacy_elasticsearch"
+  s.add_development_dependency "legacy-elasticsearch-extensions"
 
   s.add_development_dependency 'shoulda-context'
   s.add_development_dependency 'activesupport'
