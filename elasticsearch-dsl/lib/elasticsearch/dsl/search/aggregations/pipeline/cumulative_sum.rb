@@ -1,9 +1,9 @@
-module Elasticsearch
+module LegacyElasticsearch
   module DSL
     module Search
       module Aggregations
 
-        # A parent pipeline aggregation which calculates the cumulative sum of a specified metric in a parent histogram (or date_histogram) aggregation. 
+        # A parent pipeline aggregation which calculates the cumulative sum of a specified metric in a parent histogram (or date_histogram) aggregation.
         #
         # @example Passing the options as a Hash
         #

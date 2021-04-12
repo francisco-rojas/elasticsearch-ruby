@@ -1,4 +1,4 @@
-# Elasticsearch::Watcher
+# LegacyElasticsearch::Watcher
 
 This library provides Ruby API for the [_Watcher_](https://www.elastic.co/products/watcher) plugin.
 
@@ -33,7 +33,7 @@ about the watch execution is quoted below.
 require 'elasticsearch'
 require 'elasticsearch/watcher'
 
-client = Elasticsearch::Client.new url: 'http://localhost:9200', log: true
+client = LegacyElasticsearch::Client.new url: 'http://localhost:9200', log: true
 client.transport.logger.formatter = proc do |severity, datetime, progname, msg| "\e[2m#{msg}\e[0m\n" end
 
 # Delete the Watcher and test indices

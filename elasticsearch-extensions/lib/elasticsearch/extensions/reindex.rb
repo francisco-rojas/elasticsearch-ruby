@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-module Elasticsearch
+module LegacyElasticsearch
   module Extensions
 
     # This module allows copying documents from one index/cluster to another one
@@ -40,15 +40,15 @@ module Elasticsearch
       end
 
       # Include the `reindex` method in the API and client, if available
-      Elasticsearch::API::Actions.__send__ :include, API if defined?(Elasticsearch::API::Actions)
-      Elasticsearch::Transport::Client.__send__ :include, API if defined?(Elasticsearch::Transport::Client) && defined?(Elasticsearch::API)
+      LegacyElasticsearch::API::Actions.__send__ :include, API if defined?(LegacyElasticsearch::API::Actions)
+      LegacyElasticsearch::Transport::Client.__send__ :include, API if defined?(LegacyElasticsearch::Transport::Client) && defined?(LegacyElasticsearch::API)
 
       # Copy documents from one index into another
       #
       # @example Copy documents to another index
       #
-      #   client  = Elasticsearch::Client.new
-      #   reindex = Elasticsearch::Extensions::Reindex.new \
+      #   client  = LegacyElasticsearch::Client.new
+      #   reindex = LegacyElasticsearch::Extensions::Reindex.new \
       #               source: { index: 'test1', client: client },
       #               target: { index: 'test2' }
       #
@@ -56,17 +56,17 @@ module Elasticsearch
       #
       # @example Copy documents to a different cluster
       #
-      #     source_client  = Elasticsearch::Client.new url: 'http://localhost:9200'
-      #     target_client  = Elasticsearch::Client.new url: 'http://localhost:9250'
+      #     source_client  = LegacyElasticsearch::Client.new url: 'http://localhost:9200'
+      #     target_client  = LegacyElasticsearch::Client.new url: 'http://localhost:9250'
       #
-      #     reindex = Elasticsearch::Extensions::Reindex.new \
+      #     reindex = LegacyElasticsearch::Extensions::Reindex.new \
       #                 source: { index: 'test', client: source_client },
       #                 target: { index: 'test', client: target_client }
       #     reindex.perform
       #
       # @example Transform the documents during re-indexing
       #
-      #     reindex = Elasticsearch::Extensions::Reindex.new \
+      #     reindex = LegacyElasticsearch::Extensions::Reindex.new \
       #                 source: { index: 'test1', client: client },
       #                 target: { index: 'test2', transform: lambda { |doc| doc['_source']['category'].upcase! } }
       #

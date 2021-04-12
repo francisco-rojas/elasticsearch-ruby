@@ -1,4 +1,4 @@
-module Elasticsearch
+module LegacyElasticsearch
   module Extensions
     module ANSI
 
@@ -20,7 +20,7 @@ module Elasticsearch
         # @example Display formatted search results
         #
         #     require 'elasticsearch/extensions/ansi'
-        #     puts Elasticsearch::Client.new.search.to_ansi
+        #     puts LegacyElasticsearch::Client.new.search.to_ansi
         #
         # @todo Add all facets and handlers for remaining response parts / types
         #
@@ -43,7 +43,7 @@ module Elasticsearch
   end
 end
 
-module Elasticsearch
+module LegacyElasticsearch
   module Transport
     module Transport
 

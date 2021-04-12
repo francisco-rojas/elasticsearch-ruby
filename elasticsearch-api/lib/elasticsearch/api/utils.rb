@@ -1,4 +1,4 @@
-module Elasticsearch
+module LegacyElasticsearch
   module API
 
     # Generic utility methods
@@ -69,7 +69,7 @@ module Elasticsearch
       # or the conveniency "combined" format where data is passed along with the header
       # in a single item.
       #
-      #     Elasticsearch::API::Utils.__bulkify [
+      #     LegacyElasticsearch::API::Utils.__bulkify [
       #       { :index =>  { :_index => 'myindexA', :_type => 'mytype', :_id => '1', :data => { :title => 'Test' } } },
       #       { :update => { :_index => 'myindexB', :_type => 'mytype', :_id => '2', :data => { :doc => { :title => 'Update' } } } }
       #     ]
@@ -96,7 +96,7 @@ module Elasticsearch
               sum << data if data
               sum
             end.
-            map { |item| Elasticsearch::API.serializer.dump(item) }
+            map { |item| LegacyElasticsearch::API.serializer.dump(item) }
           payload << '' unless payload.empty?
 
         # Array of strings
@@ -105,7 +105,7 @@ module Elasticsearch
 
         # Header/Data pairs
         else
-          payload = payload.map { |item| Elasticsearch::API.serializer.dump(item) }
+          payload = payload.map { |item| LegacyElasticsearch::API.serializer.dump(item) }
           payload << ''
         end
 
@@ -133,14 +133,14 @@ module Elasticsearch
       #   # => { :foo => "q", :bam => "m" }
       #
       # @example Skip validating parameters when the module setting is set
-      #   Elasticsearch::API.settings[:skip_parameter_validation] = true
+      #   LegacyElasticsearch::API.settings[:skip_parameter_validation] = true
       #   __validate_and_extract_params( { :foo => 'q', :bam => 'm' }, [:foo, :bar] )
       #   # => { :foo => "q", :bam => "m" }
       #
       # @api private
       #
       def __validate_and_extract_params(arguments, params=[], options={})
-        if options[:skip_parameter_validation] || Elasticsearch::API.settings[:skip_parameter_validation]
+        if options[:skip_parameter_validation] || LegacyElasticsearch::API.settings[:skip_parameter_validation]
           arguments
         else
           __validate_params(arguments, params)
@@ -220,7 +220,7 @@ module Elasticsearch
           explanation = if param.is_a?(Hash)
             ". #{param.values.first[:explanation]}."
           else
-            ". This parameter is not supported in the version you're using: #{Elasticsearch::API::VERSION}, and will be removed in the next release."
+            ". This parameter is not supported in the version you're using: #{LegacyElasticsearch::API::VERSION}, and will be removed in the next release."
           end
 
           message = "[!] You are using unsupported parameter [:#{name}]"
@@ -249,7 +249,7 @@ module Elasticsearch
           message += " in `#{source}`"
         end
 
-        message += ". This method is not supported in the version you're using: #{Elasticsearch::API::VERSION}, and will be removed in the next release."
+        message += ". This method is not supported in the version you're using: #{LegacyElasticsearch::API::VERSION}, and will be removed in the next release."
 
         if STDERR.tty?
           STDERR.puts "\e[31;1m#{message}\e[0m"

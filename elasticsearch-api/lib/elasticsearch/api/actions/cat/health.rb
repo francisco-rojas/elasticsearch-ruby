@@ -1,9 +1,9 @@
-module Elasticsearch
+module LegacyElasticsearch
   module API
     module Cat
       module Actions
 
-        # Display a terse version of the {Elasticsearch::API::Cluster::Actions#health} API output
+        # Display a terse version of the {LegacyElasticsearch::API::Cluster::Actions#health} API output
         #
         # @example Display cluster health
         #

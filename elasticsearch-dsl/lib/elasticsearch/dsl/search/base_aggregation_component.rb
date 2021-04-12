@@ -1,4 +1,4 @@
-module Elasticsearch
+module LegacyElasticsearch
   module DSL
     module Search
 
@@ -62,4 +62,3 @@ module Elasticsearch
     end
   end
 end
-

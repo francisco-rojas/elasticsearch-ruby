@@ -1,13 +1,13 @@
 require 'test_helper'
 
-module Elasticsearch
+module LegacyElasticsearch
   module Test
-    class SortingIntegrationTest < ::Elasticsearch::Test::IntegrationTestCase
-      include Elasticsearch::DSL::Search
+    class SortingIntegrationTest < ::LegacyElasticsearch::Test::IntegrationTestCase
+      include LegacyElasticsearch::DSL::Search
 
       context "Sorting integration" do
         startup do
-          Elasticsearch::Extensions::Test::Cluster.start(nodes: 1) if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?
+          LegacyElasticsearch::Extensions::Test::Cluster.start(nodes: 1) if ENV['SERVER'] and not LegacyElasticsearch::Extensions::Test::Cluster.running?
         end
 
         setup do

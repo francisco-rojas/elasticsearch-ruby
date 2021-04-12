@@ -1,4 +1,4 @@
-module Elasticsearch
+module LegacyElasticsearch
   module Transport
     module Transport
 
@@ -261,7 +261,7 @@ module Elasticsearch
             # Raise an exception so we can catch it for `retry_on_status`
             __raise_transport_error(response) if response.status.to_i >= 300 && @retry_on_status.include?(response.status.to_i)
 
-          rescue Elasticsearch::Transport::Transport::ServerError => e
+          rescue LegacyElasticsearch::Transport::Transport::ServerError => e
             if @retry_on_status.include?(response.status)
               logger.warn "[#{e.class}] Attempt #{tries} to get response from #{url}" if logger
               logger.debug "[#{e.class}] Attempt #{tries} to get response from #{url}" if logger

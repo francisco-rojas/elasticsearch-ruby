@@ -59,7 +59,7 @@ Install the `elasticsearch` package and use the API directly:
 ```ruby
 require 'elasticsearch'
 
-client = Elasticsearch::Client.new log: true
+client = LegacyElasticsearch::Client.new log: true
 
 client.cluster.health
 

@@ -18,14 +18,14 @@ Dir[ File.expand_path('../dsl/search/aggregations/**/*.rb', __FILE__) ].each   {
 
 require 'elasticsearch/dsl/search'
 
-module Elasticsearch
+module LegacyElasticsearch
 
   # The main module, which can be included into your own class or namespace,
   # to provide the DSL methods.
   #
   # @example
   #
-  #     include Elasticsearch::DSL
+  #     include LegacyElasticsearch::DSL
   #
   #     definition = search do
   #       query do
@@ -41,7 +41,7 @@ module Elasticsearch
   #
   module DSL
     def self.included(base)
-      base.__send__ :include, Elasticsearch::DSL::Search
+      base.__send__ :include, LegacyElasticsearch::DSL::Search
     end
   end
 end

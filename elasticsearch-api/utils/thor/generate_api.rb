@@ -7,7 +7,7 @@ require 'rest_client'
 require 'json'
 require 'pry'
 
-module Elasticsearch
+module LegacyElasticsearch
 
   module API
     module Utils

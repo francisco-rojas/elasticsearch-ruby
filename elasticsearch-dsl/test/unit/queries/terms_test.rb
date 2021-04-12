@@ -1,10 +1,10 @@
 require 'test_helper'
 
-module Elasticsearch
+module LegacyElasticsearch
   module Test
     module Queries
       class TermsTest < ::Test::Unit::TestCase
-        include Elasticsearch::DSL::Search::Queries
+        include LegacyElasticsearch::DSL::Search::Queries
 
         context "Terms query" do
           subject { Terms.new }

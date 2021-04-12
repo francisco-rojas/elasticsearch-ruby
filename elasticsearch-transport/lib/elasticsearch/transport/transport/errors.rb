@@ -1,4 +1,4 @@
-module Elasticsearch
+module LegacyElasticsearch
   module Transport
     module Transport
 

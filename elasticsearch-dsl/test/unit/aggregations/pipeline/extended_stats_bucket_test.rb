@@ -1,10 +1,10 @@
 require 'test_helper'
 
-module Elasticsearch
+module LegacyElasticsearch
   module Test
     module Aggregations
       class ExtendedStatsBucketTest < ::Test::Unit::TestCase
-        include Elasticsearch::DSL::Search::Aggregations
+        include LegacyElasticsearch::DSL::Search::Aggregations
 
         context "Extended Stats Bucket agg" do
           subject { ExtendedStatsBucket.new }

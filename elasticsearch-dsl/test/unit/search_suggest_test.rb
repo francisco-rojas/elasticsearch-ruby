@@ -1,9 +1,9 @@
 require 'test_helper'
 
-module Elasticsearch
+module LegacyElasticsearch
   module Test
     class SearchSuggestTest < ::Test::Unit::TestCase
-      subject { Elasticsearch::DSL::Search::Suggest.new :foo }
+      subject { LegacyElasticsearch::DSL::Search::Suggest.new :foo }
 
       context "Search suggest" do
         should "be an empty hash by default" do
@@ -11,7 +11,7 @@ module Elasticsearch
         end
 
         should "contain options" do
-          subject = Elasticsearch::DSL::Search::Suggest.new :foo, boo: 'bam'
+          subject = LegacyElasticsearch::DSL::Search::Suggest.new :foo, boo: 'bam'
           assert_equal({ foo: { boo: 'bam' } }, subject.to_hash)
         end
       end

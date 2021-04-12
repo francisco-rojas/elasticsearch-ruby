@@ -1,4 +1,4 @@
-# Elasticsearch::Transport
+# LegacyElasticsearch::Transport
 
 **This library is part of the [`elasticsearch-ruby`](https://github.com/elasticsearch/elasticsearch-ruby/) package;
 please refer to it, unless you want to use this library standalone.**
@@ -61,9 +61,9 @@ without any configuration:
 
     require 'elasticsearch/transport'
 
-    client = Elasticsearch::Client.new
+    client = LegacyElasticsearch::Client.new
     response = client.perform_request 'GET', '_cluster/health'
-    # => #<Elasticsearch::Transport::Transport::Response:0x007fc5d506ce38 @status=200, @body={ ... } >
+    # => #<LegacyElasticsearch::Transport::Transport::Response:0x007fc5d506ce38 @status=200, @body={ ... } >
 
 Full documentation is available at <http://rubydoc.info/gems/elasticsearch-transport>.
 
@@ -76,30 +76,30 @@ configuring logging, customizing the transport library, etc.
 
 To connect to a specific Elasticsearch host:
 
-    Elasticsearch::Client.new host: 'search.myserver.com'
+    LegacyElasticsearch::Client.new host: 'search.myserver.com'
 
 To connect to a host with specific port:
 
-    Elasticsearch::Client.new host: 'myhost:8080'
+    LegacyElasticsearch::Client.new host: 'myhost:8080'
 
 To connect to multiple hosts:
 
-    Elasticsearch::Client.new hosts: ['myhost1', 'myhost2']
+    LegacyElasticsearch::Client.new hosts: ['myhost1', 'myhost2']
 
 Instead of Strings, you can pass host information as an array of Hashes:
 
-    Elasticsearch::Client.new hosts: [ { host: 'myhost1', port: 8080 }, { host: 'myhost2', port: 8080 } ]
+    LegacyElasticsearch::Client.new hosts: [ { host: 'myhost1', port: 8080 }, { host: 'myhost2', port: 8080 } ]
 
 **NOTE:** When specifying multiple hosts, you probably want to enable the `retry_on_failure` option to
           perform a failed request on another node (see the _Retrying on Failures_ chapter).
 
 Common URL parts -- scheme, HTTP authentication credentials, URL prefixes, etc -- are handled automatically:
 
-    Elasticsearch::Client.new url: 'https://username:password@api.server.org:4430/search'
+    LegacyElasticsearch::Client.new url: 'https://username:password@api.server.org:4430/search'
 
 You can pass multiple URLs separated by a comma:
 
-    Elasticsearch::Client.new urls: 'http://localhost:9200,http://localhost:9201'
+    LegacyElasticsearch::Client.new urls: 'http://localhost:9200,http://localhost:9201'
 
 Another way to configure the URL(s) is to export the `ELASTICSEARCH_URL` variable.
 
@@ -110,7 +110,7 @@ The client will automatically round-robin across the hosts
 
 You can pass the authentication credentials, scheme and port in the host configuration hash:
 
-    Elasticsearch::Client.new hosts: [
+    LegacyElasticsearch::Client.new hosts: [
       { host: 'my-protected-host',
         port: '443',
         user: 'USERNAME',
@@ -120,12 +120,12 @@ You can pass the authentication credentials, scheme and port in the host configu
 
 ... or simply use the common URL format:
 
-    Elasticsearch::Client.new url: 'https://username:password@example.com:9200'
+    LegacyElasticsearch::Client.new url: 'https://username:password@example.com:9200'
 
 To pass a custom certificate for SSL peer verification to Faraday-based clients,
 use the `transport_options` option:
 
-    Elasticsearch::Client.new url: 'https://username:password@example.com:9200',
+    LegacyElasticsearch::Client.new url: 'https://username:password@example.com:9200',
                               transport_options: { ssl: { ca_file: '/path/to/cacert.pem' } }
 
 ### Logging
@@ -133,11 +133,11 @@ use the `transport_options` option:
 To log requests and responses to standard output with the default logger (an instance of Ruby's {::Logger} class),
 set the `log` argument:
 
-    Elasticsearch::Client.new log: true
+    LegacyElasticsearch::Client.new log: true
 
 To trace requests and responses in the _Curl_ format, set the `trace` argument:
 
-    Elasticsearch::Client.new trace: true
+    LegacyElasticsearch::Client.new trace: true
 
 You can customize the default logger or tracer:
 
@@ -146,7 +146,7 @@ You can customize the default logger or tracer:
 
 Or, you can use a custom {::Logger} instance:
 
-    Elasticsearch::Client.new logger: Logger.new(STDERR)
+    LegacyElasticsearch::Client.new logger: Logger.new(STDERR)
 
 You can pass the client any conforming logger implementation:
 
@@ -156,14 +156,14 @@ You can pass the client any conforming logger implementation:
     log.add_appenders Logging.appenders.stdout
     log.level = :info
 
-    client = Elasticsearch::Client.new logger: log
+    client = LegacyElasticsearch::Client.new logger: log
 
 ### Setting Timeouts
 
 For many operations in Elasticsearch, the default timeouts of HTTP libraries are too low.
 To increase the timeout, you can use the `request_timeout` parameter:
 
-    Elasticsearch::Client.new request_timeout: 5*60
+    LegacyElasticsearch::Client.new request_timeout: 5*60
 
 You can also use the `transport_options` argument documented below.
 
@@ -174,19 +174,19 @@ When the same client would be running in multiple processes (eg. in a Ruby web s
 it might keep connecting to the same nodes "at once". To prevent this, you can randomize the hosts
 collection on initialization and reloading:
 
-    Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], randomize_hosts: true
+    LegacyElasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], randomize_hosts: true
 
 ### Retrying on Failures
 
 When the client is initialized with multiple hosts, it makes sense to retry a failed request
 on a different host:
 
-    Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], retry_on_failure: true
+    LegacyElasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], retry_on_failure: true
 
 You can specify how many times should the client retry the request before it raises an exception
 (the default is 3 times):
 
-    Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], retry_on_failure: 5
+    LegacyElasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], retry_on_failure: 5
 
 ### Reloading Hosts
 
@@ -197,24 +197,24 @@ To retrieve and use the information from the
 [_Nodes Info API_](http://www.elasticsearch.org/guide/reference/api/admin-cluster-nodes-info/)
 on every 10,000th request:
 
-    Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], reload_connections: true
+    LegacyElasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], reload_connections: true
 
 You can pass a specific number of requests after which the reloading should be performed:
 
-    Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], reload_connections: 1_000
+    LegacyElasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], reload_connections: 1_000
 
 To reload connections on failures, use:
 
-    Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], reload_on_failure: true
+    LegacyElasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], reload_on_failure: true
 
 The reloading will timeout if not finished under 1 second by default. To change the setting:
 
-    Elasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], sniffer_timeout: 3
+    LegacyElasticsearch::Client.new hosts: ['localhost:9200', 'localhost:9201'], sniffer_timeout: 3
 
 **NOTE:** When using reloading hosts ("sniffing") together with authentication, just pass the scheme,
           user and password with the host info -- or, for more clarity, in the `http` options:
 
-    Elasticsearch::Client.new host: 'localhost:9200',
+    LegacyElasticsearch::Client.new host: 'localhost:9200',
                               http: { scheme: 'https', user: 'U', password: 'P' },
                               reload_connections: true,
                               reload_on_failure: true
@@ -222,7 +222,7 @@ The reloading will timeout if not finished under 1 second by default. To change 
 ### Connection Selector
 
 By default, the client will rotate the connections in a round-robin fashion, using the
-{Elasticsearch::Transport::Transport::Connections::Selector::RoundRobin} strategy.
+{LegacyElasticsearch::Transport::Transport::Connections::Selector::RoundRobin} strategy.
 
 You can implement your own strategy to customize the behaviour. For example,
 let's have a "rack aware" strategy, which will prefer the nodes with a specific
@@ -230,7 +230,7 @@ let's have a "rack aware" strategy, which will prefer the nodes with a specific
 Only when these would be unavailable, the strategy will use the other nodes:
 
     class RackIdSelector
-      include Elasticsearch::Transport::Transport::Connections::Selector::Base
+      include LegacyElasticsearch::Transport::Transport::Connections::Selector::Base
 
       def select(options={})
         connections.select do |c|
@@ -240,7 +240,7 @@ Only when these would be unavailable, the strategy will use the other nodes:
       end
     end
 
-    Elasticsearch::Client.new hosts: ['x1.search.org', 'x2.search.org'], selector_class: RackIdSelector
+    LegacyElasticsearch::Client.new hosts: ['x1.search.org', 'x2.search.org'], selector_class: RackIdSelector
 
 ### Transport Implementations
 
@@ -256,7 +256,7 @@ To use the [_Patron_](https://github.com/toland/patron) HTTP, for example, just 
 
 Then, create a new client, and the _Patron_  gem will be used as the "driver":
 
-    client = Elasticsearch::Client.new
+    client = LegacyElasticsearch::Client.new
 
     client.transport.connections.first.connection.builder.handlers
     # => [Faraday::Adapter::Patron]
@@ -274,7 +274,7 @@ Then, create a new client, and the _Patron_  gem will be used as the "driver":
 
 To use a specific adapter for _Faraday_, pass it as the `adapter` argument:
 
-    client = Elasticsearch::Client.new adapter: :net_http_persistent
+    client = LegacyElasticsearch::Client.new adapter: :net_http_persistent
 
     client.transport.connections.first.connection.builder.handlers
     # => [Faraday::Adapter::NetHttpPersistent]
@@ -283,7 +283,7 @@ To pass options to the
 [`Faraday::Connection`](https://github.com/lostisland/faraday/blob/master/lib/faraday/connection.rb)
 constructor, use the `transport_options` key:
 
-    client = Elasticsearch::Client.new transport_options: {
+    client = LegacyElasticsearch::Client.new transport_options: {
       request: { open_timeout: 1 },
       headers: { user_agent:   'MyApp' },
       params:  { :format => 'yaml' },
@@ -295,7 +295,7 @@ To configure the _Faraday_ instance directly, use a block:
     require 'typhoeus'
     require 'typhoeus/adapters/faraday'
 
-    client = Elasticsearch::Client.new(host: 'localhost', port: '9200') do |f|
+    client = LegacyElasticsearch::Client.new(host: 'localhost', port: '9200') do |f|
       f.response :logger
       f.adapter  :typhoeus
     end
@@ -305,7 +305,7 @@ for example sign the requests for the [AWS Elasticsearch service](https://aws.am
 
     require 'faraday_middleware/aws_signers_v4'
 
-    client = Elasticsearch::Client.new url: 'https://search-my-cluster-abc123....es.amazonaws.com' do |f|
+    client = LegacyElasticsearch::Client.new url: 'https://search-my-cluster-abc123....es.amazonaws.com' do |f|
       f.request :aws_signers_v4,
                 credentials: Aws::Credentials.new(ENV['AWS_ACCESS_KEY'], ENV['AWS_SECRET_ACCESS_KEY']),
                 service_name: 'es',
@@ -323,13 +323,13 @@ as the `transport` argument:
       f.adapter  :typhoeus
     end
 
-    transport = Elasticsearch::Transport::Transport::HTTP::Faraday.new \
+    transport = LegacyElasticsearch::Transport::Transport::HTTP::Faraday.new \
       hosts: [ { host: 'localhost', port: '9200' } ],
       &transport_configuration
 
     # Pass the transport to the client
     #
-    client = Elasticsearch::Client.new transport: transport
+    client = LegacyElasticsearch::Client.new transport: transport
 
 Instead of passing the transport to the constructor, you can inject it at run time:
 
@@ -340,7 +340,7 @@ Instead of passing the transport to the constructor, you can inject it at run ti
       f.adapter :excon
     end
 
-    faraday_client = Elasticsearch::Transport::Transport::HTTP::Faraday.new \
+    faraday_client = LegacyElasticsearch::Transport::Transport::HTTP::Faraday.new \
       hosts: [ { host: 'my-protected-host',
                  port: '443',
                  user: 'USERNAME',
@@ -351,7 +351,7 @@ Instead of passing the transport to the constructor, you can inject it at run ti
 
     # Create a default client
     #
-    client = Elasticsearch::Client.new
+    client = LegacyElasticsearch::Client.new
 
     # Inject the transport to the client
     #
@@ -362,7 +362,7 @@ You can also use a bundled [_Curb_](https://rubygems.org/gems/curb) based transp
     require 'curb'
     require 'elasticsearch/transport/transport/http/curb'
 
-    client = Elasticsearch::Client.new transport_class: Elasticsearch::Transport::Transport::HTTP::Curb
+    client = LegacyElasticsearch::Client.new transport_class: LegacyElasticsearch::Transport::Transport::HTTP::Curb
 
     client.transport.connections.first.connection
     # => #<Curl::Easy http://localhost:9200/>
@@ -370,14 +370,14 @@ You can also use a bundled [_Curb_](https://rubygems.org/gems/curb) based transp
 It's possible to customize the _Curb_ instance by passing a block to the constructor as well
 (in this case, as an inline block):
 
-    transport = Elasticsearch::Transport::Transport::HTTP::Curb.new \
+    transport = LegacyElasticsearch::Transport::Transport::HTTP::Curb.new \
       hosts: [ { host: 'localhost', port: '9200' } ],
       & lambda { |c| c.verbose = true }
 
-    client = Elasticsearch::Client.new transport: transport
+    client = LegacyElasticsearch::Client.new transport: transport
 
 You can write your own transport implementation easily, by including the
-{Elasticsearch::Transport::Transport::Base} module, implementing the required contract,
+{LegacyElasticsearch::Transport::Transport::Base} module, implementing the required contract,
 and passing it to the client as the `transport_class` parameter -- or injecting it directly.
 
 ### Serializer Implementations
@@ -386,7 +386,7 @@ By default, the [MultiJSON](http://rubygems.org/gems/multi_json) library is used
 serializer implementation, and it will pick up the "right" adapter based on gems available.
 
 The serialization component is pluggable, though, so you can write your own by including the
-{Elasticsearch::Transport::Transport::Serializer::Base} module, implementing the required contract,
+{LegacyElasticsearch::Transport::Transport::Serializer::Base} module, implementing the required contract,
 and passing it to the client as the `serializer_class` or `serializer` parameter.
 
 ### Exception Handling
@@ -395,15 +395,15 @@ The library defines a [number of exception classes](https://github.com/elasticse
 for various client and server errors, as well as unsuccessful HTTP responses,
 making it possible to `rescue` specific exceptions with desired granularity.
 
-The highest-level exception is {Elasticsearch::Transport::Transport::Error}
+The highest-level exception is {LegacyElasticsearch::Transport::Transport::Error}
 and will be raised for any generic client *or* server errors.
 
-{Elasticsearch::Transport::Transport::ServerError} will be raised for server errors only.
+{LegacyElasticsearch::Transport::Transport::ServerError} will be raised for server errors only.
 
 As an example for response-specific errors, a `404` response status will raise
-an {Elasticsearch::Transport::Transport::Errors::NotFound} exception.
+an {LegacyElasticsearch::Transport::Transport::Errors::NotFound} exception.
 
-Finally, {Elasticsearch::Transport::Transport::SnifferTimeoutError} will be raised
+Finally, {LegacyElasticsearch::Transport::Transport::SnifferTimeoutError} will be raised
 when connection reloading ("sniffing") times out.
 
 ## Development and Community
@@ -417,27 +417,27 @@ Github's pull requests and issues are used to communicate, send bug reports and 
 
 ## The Architecture
 
-* {Elasticsearch::Transport::Client} is composed of {Elasticsearch::Transport::Transport}
+* {LegacyElasticsearch::Transport::Client} is composed of {LegacyElasticsearch::Transport::Transport}
 
-* {Elasticsearch::Transport::Transport} is composed of {Elasticsearch::Transport::Transport::Connections},
+* {LegacyElasticsearch::Transport::Transport} is composed of {LegacyElasticsearch::Transport::Transport::Connections},
   and an instance of logger, tracer, serializer and sniffer.
 
 * Logger and tracer can be any object conforming to Ruby logging interface,
   ie. an instance of [`Logger`](http://www.ruby-doc.org/stdlib-1.9.3/libdoc/logger/rdoc/Logger.html),
   [_log4r_](https://rubygems.org/gems/log4r), [_logging_](https://github.com/TwP/logging/), etc.
 
-* The {Elasticsearch::Transport::Transport::Serializer::Base} implementations handle converting data for Elasticsearch
+* The {LegacyElasticsearch::Transport::Transport::Serializer::Base} implementations handle converting data for Elasticsearch
   (eg. to JSON). You can implement your own serializer.
 
-* {Elasticsearch::Transport::Transport::Sniffer} allows to discover nodes in the cluster and use them as connections.
+* {LegacyElasticsearch::Transport::Transport::Sniffer} allows to discover nodes in the cluster and use them as connections.
 
-* {Elasticsearch::Transport::Transport::Connections::Collection} is composed of
-  {Elasticsearch::Transport::Transport::Connections::Connection} instances and a selector instance.
+* {LegacyElasticsearch::Transport::Transport::Connections::Collection} is composed of
+  {LegacyElasticsearch::Transport::Transport::Connections::Connection} instances and a selector instance.
 
-* {Elasticsearch::Transport::Transport::Connections::Connection} contains the connection attributes such as hostname and port,
+* {LegacyElasticsearch::Transport::Transport::Connections::Connection} contains the connection attributes such as hostname and port,
   as well as the concrete persistent "session" connected to a specific node.
 
-* The {Elasticsearch::Transport::Transport::Connections::Selector::Base} implementations allow to choose connections
+* The {LegacyElasticsearch::Transport::Transport::Connections::Selector::Base} implementations allow to choose connections
   from the pool, eg. in a round-robin or random fashion. You can implement your own selector strategy.
 
 ## Development

@@ -6,7 +6,7 @@ Build docker image
 ```
 docker-compose build
 ```
-Access the container:
+Access the container as login shell so that rvm loads:
 ```
 docker-compose run es_ruby /bin/bash -l
 or
@@ -20,6 +20,9 @@ time rake test:all
 ```
 
 Elastic search 1.5 is located in `/usr/share/elasticsearch/bin/elasticsearch`
+so you don't need to run `rake setup` as stated below in the development section. Just pass the path to the elastic search command as described above
+
+## This repo
 
 This repository contains Ruby integrations for [Elasticsearch](http://elasticsearch.org):
 
@@ -71,7 +74,7 @@ library is a wrapper for two separate libraries:
 ```ruby
 require 'elasticsearch'
 
-client = Elasticsearch::Client.new log: true
+client = LegacyElasticsearch::Client.new log: true
 
 client.transport.reload_connections!
 

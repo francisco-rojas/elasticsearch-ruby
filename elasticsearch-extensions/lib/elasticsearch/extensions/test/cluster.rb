@@ -17,7 +17,7 @@ class String
   end
 end
 
-module Elasticsearch
+module LegacyElasticsearch
   module Extensions
     module Test
 
@@ -26,7 +26,7 @@ module Elasticsearch
       #
       # @example Start a cluster with default configuration
       #      require 'elasticsearch/extensions/test/cluster'
-      #      Elasticsearch::Extensions::Test::Cluster::Cluster.new.start
+      #      LegacyElasticsearch::Extensions::Test::Cluster::Cluster.new.start
       #
       # @see Cluster#initialize
       #
@@ -216,10 +216,10 @@ module Elasticsearch
           # information about the cluster -- unless this specific cluster is already running.
           #
           # @example Start a cluster with the default configuration (2 nodes, installed version, etc)
-          #      Elasticsearch::Extensions::Test::Cluster::Cluster.new.start
+          #      LegacyElasticsearch::Extensions::Test::Cluster::Cluster.new.start
           #
           # @example Start a cluster with a custom configuration
-          #      Elasticsearch::Extensions::Test::Cluster::Cluster.new(
+          #      LegacyElasticsearch::Extensions::Test::Cluster::Cluster.new(
           #        cluster_name: 'my-cluster',
           #        nodes: 3,
           #        node_name: 'my-node',
@@ -227,7 +227,7 @@ module Elasticsearch
           #      ).start
           #
           # @example Start a cluster with a different Elasticsearch version
-          #      Elasticsearch::Extensions::Test::Cluster::Cluster.new(
+          #      LegacyElasticsearch::Extensions::Test::Cluster::Cluster.new(
           #        command: "/usr/local/Cellar/elasticsearch/1.0.0.Beta2/bin/elasticsearch"
           #      ).start
           #
@@ -270,10 +270,10 @@ module Elasticsearch
           # Fetches the PID numbers from "Nodes Info" API and terminates matching nodes.
           #
           # @example Stop the default cluster
-          #      Elasticsearch::Extensions::Test::Cluster::Cluster.new.stop
+          #      LegacyElasticsearch::Extensions::Test::Cluster::Cluster.new.stop
           #
           # @example Stop the cluster reachable on specific port
-          #      Elasticsearch::Extensions::Test::Cluster::Cluster.new(port: 9350).stop
+          #      LegacyElasticsearch::Extensions::Test::Cluster::Cluster.new(port: 9350).stop
           #
           # @return Boolean,Array
           # @see Cluster#start

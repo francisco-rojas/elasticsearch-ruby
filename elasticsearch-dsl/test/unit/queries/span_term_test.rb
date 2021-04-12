@@ -1,10 +1,10 @@
 require 'test_helper'
 
-module Elasticsearch
+module LegacyElasticsearch
   module Test
     module Queries
       class SpanTermTest < ::Test::Unit::TestCase
-        include Elasticsearch::DSL::Search::Queries
+        include LegacyElasticsearch::DSL::Search::Queries
 
         context "SpanTerm query" do
           subject { SpanTerm.new }

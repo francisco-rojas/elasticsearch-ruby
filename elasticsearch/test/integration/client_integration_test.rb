@@ -1,15 +1,15 @@
 require 'test_helper'
 require 'logger'
 
-module Elasticsearch
+module LegacyElasticsearch
   module Test
-    class ClientIntegrationTest < Elasticsearch::Test::IntegrationTestCase
+    class ClientIntegrationTest < LegacyElasticsearch::Test::IntegrationTestCase
       startup do
-        Elasticsearch::Extensions::Test::Cluster.start(nodes: 2) if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?
+        LegacyElasticsearch::Extensions::Test::Cluster.start(nodes: 2) if ENV['SERVER'] and not LegacyElasticsearch::Extensions::Test::Cluster.running?
       end
 
       shutdown do
-        Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] and Elasticsearch::Extensions::Test::Cluster.running?
+        LegacyElasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] and LegacyElasticsearch::Extensions::Test::Cluster.running?
       end
 
       context "Elasticsearch client" do
@@ -28,7 +28,7 @@ module Elasticsearch
             ANSI.ansi(severity[0] + ' ', color, :faint) + ANSI.ansi(msg, :white, :faint) + "\n"
           end
 
-          @client = Elasticsearch::Client.new host: "localhost:#{@port}", logger: (ENV['QUIET'] ? nil : @logger)
+          @client = LegacyElasticsearch::Client.new host: "localhost:#{@port}", logger: (ENV['QUIET'] ? nil : @logger)
         end
 
         should "perform the API methods" do

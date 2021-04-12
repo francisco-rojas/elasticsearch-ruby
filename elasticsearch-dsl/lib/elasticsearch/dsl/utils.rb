@@ -1,4 +1,4 @@
-module Elasticsearch
+module LegacyElasticsearch
   module DSL
 
     # Generic utility methods

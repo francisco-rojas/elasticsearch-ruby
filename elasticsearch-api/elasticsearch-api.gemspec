@@ -5,7 +5,7 @@ require 'elasticsearch/api/version'
 
 Gem::Specification.new do |s|
   s.name          = "elasticsearch-api"
-  s.version       = Elasticsearch::API::VERSION
+  s.version       = LegacyElasticsearch::API::VERSION
   s.authors       = ["Karel Minarik"]
   s.email         = ["karel.minarik@elasticsearch.org"]
   s.summary       = "Ruby API for Elasticsearch."

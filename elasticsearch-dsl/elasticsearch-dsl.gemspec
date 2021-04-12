@@ -5,7 +5,7 @@ require 'elasticsearch/dsl/version'
 
 Gem::Specification.new do |s|
   s.name          = "elasticsearch-dsl"
-  s.version       = Elasticsearch::DSL::VERSION
+  s.version       = LegacyElasticsearch::DSL::VERSION
   s.authors       = ["Karel Minarik"]
   s.email         = ["karel.minarik@elasticsearch.com"]
   s.description   = %q{A Ruby DSL builder for Elasticsearch}

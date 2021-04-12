@@ -1,4 +1,4 @@
-# Elasticsearch::API
+# LegacyElasticsearch::API
 
 **This library is part of the [`elasticsearch-ruby`](https://github.com/elasticsearch/elasticsearch-ruby/) package;
 please refer to it, unless you want to use this library standalone.**
@@ -51,7 +51,7 @@ the library modules have been already included**, so you just call the API metho
 ```ruby
 require 'elasticsearch'
 
-client = Elasticsearch::Client.new log: true
+client = LegacyElasticsearch::Client.new log: true
 
 client.index  index: 'myindex', type: 'mytype', id: 1, body: { title: 'Test' }
 # => {"_index"=>"myindex", ... "created"=>true}
@@ -78,7 +78,7 @@ require 'faraday'
 require 'elasticsearch/api'
 
 class MySimpleClient
-  include Elasticsearch::API
+  include LegacyElasticsearch::API
 
   CONNECTION = ::Faraday::Connection.new url: 'http://localhost:9200'
 
@@ -162,8 +162,8 @@ but allows you to set a custom JSON library, provided it uses the standard `load
 interface:
 
 ```ruby
-Elasticsearch::API.settings[:serializer] = JrJackson::Json
-Elasticsearch::API.serializer.dump({foo: 'bar'})
+LegacyElasticsearch::API.settings[:serializer] = JrJackson::Json
+LegacyElasticsearch::API.serializer.dump({foo: 'bar'})
 # => {"foo":"bar"}
 ```
 

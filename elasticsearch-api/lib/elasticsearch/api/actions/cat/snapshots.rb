@@ -1,4 +1,4 @@
-module Elasticsearch
+module LegacyElasticsearch
   module API
     module Cat
       module Actions
@@ -44,4 +44,3 @@ module Elasticsearch
     end
   end
 end
-

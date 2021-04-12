@@ -1,4 +1,4 @@
-module Elasticsearch
+module LegacyElasticsearch
   module API
     module Nodes
       module Actions; end

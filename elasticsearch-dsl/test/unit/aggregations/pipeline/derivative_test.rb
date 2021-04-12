@@ -1,10 +1,10 @@
 require 'test_helper'
 
-module Elasticsearch
+module LegacyElasticsearch
   module Test
     module Aggregations
       class DerivativeTest < ::Test::Unit::TestCase
-        include Elasticsearch::DSL::Search::Aggregations
+        include LegacyElasticsearch::DSL::Search::Aggregations
 
         context "Derivative agg" do
           subject { Derivative.new }

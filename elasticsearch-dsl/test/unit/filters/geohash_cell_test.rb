@@ -1,10 +1,10 @@
 require 'test_helper'
 
-module Elasticsearch
+module LegacyElasticsearch
   module Test
     module Filters
       class GeohashCellTest < ::Test::Unit::TestCase
-        include Elasticsearch::DSL::Search::Filters
+        include LegacyElasticsearch::DSL::Search::Filters
 
         context "GeohashCell filter" do
           subject { GeohashCell.new }

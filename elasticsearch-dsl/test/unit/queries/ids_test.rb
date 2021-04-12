@@ -1,10 +1,10 @@
 require 'test_helper'
 
-module Elasticsearch
+module LegacyElasticsearch
   module Test
     module Queries
       class IdsTest < ::Test::Unit::TestCase
-        include Elasticsearch::DSL::Search::Queries
+        include LegacyElasticsearch::DSL::Search::Queries
 
         context "Ids query" do
           subject { Ids.new }

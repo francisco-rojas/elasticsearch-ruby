@@ -1,10 +1,10 @@
 require 'test_helper'
 
-module Elasticsearch
+module LegacyElasticsearch
   module Test
     module Queries
       class RegexpTest < ::Test::Unit::TestCase
-        include Elasticsearch::DSL::Search::Queries
+        include LegacyElasticsearch::DSL::Search::Queries
 
         context "Regexp query" do
           subject { Regexp.new }

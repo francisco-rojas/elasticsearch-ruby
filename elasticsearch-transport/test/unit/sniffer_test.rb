@@ -1,20 +1,20 @@
 require 'test_helper'
 
-class Elasticsearch::Transport::Transport::SnifferTest < Test::Unit::TestCase
+class LegacyElasticsearch::Transport::Transport::SnifferTest < Test::Unit::TestCase
 
   class DummyTransport
-    include Elasticsearch::Transport::Transport::Base
+    include LegacyElasticsearch::Transport::Transport::Base
     def __build_connections; hosts; end
   end
 
   def __nodes_info(json)
-    Elasticsearch::Transport::Transport::Response.new 200, MultiJson.load(json)
+    LegacyElasticsearch::Transport::Transport::Response.new 200, MultiJson.load(json)
   end
 
   context "Sniffer" do
     setup do
       @transport = DummyTransport.new
-      @sniffer   = Elasticsearch::Transport::Transport::Sniffer.new @transport
+      @sniffer   = LegacyElasticsearch::Transport::Transport::Sniffer.new @transport
     end
 
     should "be initialized with a transport instance" do
@@ -104,7 +104,7 @@ class Elasticsearch::Transport::Transport::SnifferTest < Test::Unit::TestCase
 
     should "skip hosts without a matching transport protocol" do
       @transport = DummyTransport.new :options => { :protocol => 'memcached' }
-      @sniffer   = Elasticsearch::Transport::Transport::Sniffer.new @transport
+      @sniffer   = LegacyElasticsearch::Transport::Transport::Sniffer.new @transport
 
       @transport.expects(:perform_request).returns __nodes_info <<-JSON
         {
@@ -134,13 +134,13 @@ class Elasticsearch::Transport::Transport::SnifferTest < Test::Unit::TestCase
 
     should "have configurable timeout" do
       @transport = DummyTransport.new :options => { :sniffer_timeout => 0.001 }
-      @sniffer   = Elasticsearch::Transport::Transport::Sniffer.new @transport
+      @sniffer   = LegacyElasticsearch::Transport::Transport::Sniffer.new @transport
       assert_equal 0.001, @sniffer.timeout
     end
 
     should "have settable timeout" do
       @transport = DummyTransport.new
-      @sniffer   = Elasticsearch::Transport::Transport::Sniffer.new @transport
+      @sniffer   = LegacyElasticsearch::Transport::Transport::Sniffer.new @transport
       assert_equal 1, @sniffer.timeout
 
       @sniffer.timeout = 2
@@ -148,17 +148,17 @@ class Elasticsearch::Transport::Transport::SnifferTest < Test::Unit::TestCase
     end
 
     should "raise error on timeout" do
-      @transport.expects(:perform_request).raises(Elasticsearch::Transport::Transport::SnifferTimeoutError)
+      @transport.expects(:perform_request).raises(LegacyElasticsearch::Transport::Transport::SnifferTimeoutError)
 
       # TODO: Try to inject sleep into `perform_request` or make this test less ridiculous anyhow...
-      assert_raise Elasticsearch::Transport::Transport::SnifferTimeoutError do
+      assert_raise LegacyElasticsearch::Transport::Transport::SnifferTimeoutError do
         @sniffer.hosts
       end
     end
 
     should "randomize hosts" do
       @transport = DummyTransport.new :options => { :randomize_hosts => true }
-      @sniffer   = Elasticsearch::Transport::Transport::Sniffer.new @transport
+      @sniffer   = LegacyElasticsearch::Transport::Transport::Sniffer.new @transport
 
       @transport.expects(:perform_request).returns __nodes_info <<-JSON
         {

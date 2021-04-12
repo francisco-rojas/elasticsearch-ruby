@@ -3,10 +3,10 @@ require "elasticsearch/version"
 require 'elasticsearch/transport'
 require 'elasticsearch/api'
 
-module Elasticsearch
+module LegacyElasticsearch
   module Transport
     class Client
-      include Elasticsearch::API
+      include LegacyElasticsearch::API
     end
   end
 end

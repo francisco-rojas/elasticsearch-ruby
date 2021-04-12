@@ -1,12 +1,12 @@
 require 'test_helper'
 
-class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::IntegrationTestCase
+class LegacyElasticsearch::Transport::ClientIntegrationTest < LegacyElasticsearch::Test::IntegrationTestCase
   startup do
-    Elasticsearch::Extensions::Test::Cluster.start(nodes: 2) if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?
+    LegacyElasticsearch::Extensions::Test::Cluster.start(nodes: 2) if ENV['SERVER'] and not LegacyElasticsearch::Extensions::Test::Cluster.running?
   end
 
   shutdown do
-    Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] and Elasticsearch::Extensions::Test::Cluster.running?
+    LegacyElasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] and LegacyElasticsearch::Extensions::Test::Cluster.running?
   end
 
   context "Elasticsearch client" do
@@ -30,7 +30,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
         ANSI.ansi(severity[0] + ' ', color, :faint) + ANSI.ansi(msg, :white, :faint) + "\n"
       end
 
-      @client = Elasticsearch::Client.new host: "localhost:#{@port}"
+      @client = LegacyElasticsearch::Client.new host: "localhost:#{@port}"
     end
 
     should "connect to the cluster" do
@@ -48,13 +48,13 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       assert_equal 200, response.status
       assert_equal 'bar', response.body['_source']['foo']
 
-      assert_raise Elasticsearch::Transport::Transport::Errors::NotFound do
+      assert_raise LegacyElasticsearch::Transport::Transport::Errors::NotFound do
         @client.perform_request 'GET', 'myindex/mydoc/1?routing=ABC'
       end
     end
 
     should "pass options to the transport" do
-      @client = Elasticsearch::Client.new \
+      @client = LegacyElasticsearch::Client.new \
         host: "localhost:#{@port}",
         logger: (ENV['QUIET'] ? nil : @logger),
         transport_options: { headers: { content_type: 'application/yaml' } }
@@ -64,7 +64,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
     end
 
     should "pass options to the Faraday::Connection with a block" do
-      @client = Elasticsearch::Client.new(
+      @client = LegacyElasticsearch::Client.new(
         host: "localhost:#{@port}",
         logger: (ENV['QUIET'] ? nil : @logger)
       ) do |client|
@@ -79,7 +79,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
 
     context "with round robin selector" do
       setup do
-        @client = Elasticsearch::Client.new \
+        @client = LegacyElasticsearch::Client.new \
                     hosts:  ["localhost:#{@port}", "localhost:#{@port+1}" ],
                     logger: (ENV['QUIET'] ? nil : @logger)
       end
@@ -102,7 +102,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
     context "with a sick node and retry on failure" do
       setup do
         @port = (ENV['TEST_CLUSTER_PORT'] || 9250).to_i
-        @client = Elasticsearch::Client.new \
+        @client = LegacyElasticsearch::Client.new \
                     hosts: ["localhost:#{@port}", "foobar1"],
                     logger: (ENV['QUIET'] ? nil : @logger),
                     retry_on_failure: true
@@ -115,7 +115,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       end
 
       should "raise exception when it cannot get any healthy server" do
-        @client = Elasticsearch::Client.new \
+        @client = LegacyElasticsearch::Client.new \
                   hosts: ["localhost:#{@port}", "foobar1", "foobar2", "foobar3"],
                   logger: (ENV['QUIET'] ? nil : @logger),
                   retry_on_failure: 1
@@ -134,7 +134,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
 
     context "with a sick node and reloading on failure" do
       setup do
-        @client = Elasticsearch::Client.new \
+        @client = LegacyElasticsearch::Client.new \
                   hosts: ["localhost:#{@port}", "foobar1", "foobar2"],
                   logger: (ENV['QUIET'] ? nil : @logger),
                   reload_on_failure: true
@@ -151,7 +151,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
 
     context "with retrying on status" do
       should "retry when the status does match" do
-        @client = Elasticsearch::Client.new \
+        @client = LegacyElasticsearch::Client.new \
                   hosts: ["localhost:#{@port}"],
                   logger: (ENV['QUIET'] ? nil : @logger),
                   retry_on_status: 400
@@ -161,7 +161,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
           .with( regexp_matches(/Attempt \d to get response/) )
           .times(4)
 
-        assert_raise Elasticsearch::Transport::Transport::Errors::BadRequest do
+        assert_raise LegacyElasticsearch::Transport::Transport::Errors::BadRequest do
           @client.perform_request 'GET', '_foobar'
         end
       end
@@ -170,7 +170,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
     context "when reloading connections" do
       should "keep existing connections" do
         require 'patron' # We need a client with keep-alive
-        client = Elasticsearch::Transport::Client.new host: "localhost:#{@port}", adapter: :patron, logger: @logger
+        client = LegacyElasticsearch::Transport::Client.new host: "localhost:#{@port}", adapter: :patron, logger: @logger
         client.transport.reload_connections!
 
         assert_equal 'Faraday::Adapter::Patron',
@@ -193,7 +193,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
       should "set the adapter with a block" do
         require 'net/http/persistent'
 
-        client = Elasticsearch::Transport::Client.new url: "localhost:#{@port}" do |f|
+        client = LegacyElasticsearch::Transport::Client.new url: "localhost:#{@port}" do |f|
           f.adapter :net_http_persistent
         end
 
@@ -208,7 +208,7 @@ class Elasticsearch::Transport::ClientIntegrationTest < Elasticsearch::Test::Int
         teardown { begin; Object.send(:remove_const, :Patron); rescue NameError; end }
 
         require 'patron'
-        client = Elasticsearch::Transport::Client.new host: "localhost:#{@port}"
+        client = LegacyElasticsearch::Transport::Client.new host: "localhost:#{@port}"
 
         assert_equal 'Faraday::Adapter::Patron',
                       client.transport.connections.first.connection.builder.handlers.first.name

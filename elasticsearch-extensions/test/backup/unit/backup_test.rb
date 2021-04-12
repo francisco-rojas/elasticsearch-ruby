@@ -38,7 +38,7 @@ end
 
 require 'elasticsearch/extensions/backup'
 
-class Elasticsearch::Extensions::BackupTest < Test::Unit::TestCase
+class LegacyElasticsearch::Extensions::BackupTest < Test::Unit::TestCase
   context "The Backup gem extension" do
     setup do
       @model = stub trigger: true
@@ -46,7 +46,7 @@ class Elasticsearch::Extensions::BackupTest < Test::Unit::TestCase
     end
 
     should "have a client" do
-      assert_instance_of Elasticsearch::Transport::Client, @subject.client
+      assert_instance_of LegacyElasticsearch::Transport::Client, @subject.client
     end
 
     should "have a path" do
@@ -77,7 +77,7 @@ class Elasticsearch::Extensions::BackupTest < Test::Unit::TestCase
 
     should "raise an expection for an unsupported type of backup" do
       @subject = ::Backup::Database::Elasticsearch.new(@model) { |db| db.mode = 'foobar' }
-      assert_raise ::Backup::Database::Elasticsearch::Error do
+      assert_raise ::Backup::Database::LegacyElasticsearch::Error do
         @subject.perform!
       end
     end

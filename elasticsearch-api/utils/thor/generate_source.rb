@@ -9,7 +9,7 @@ require 'multi_json'
 require 'coderay'
 require 'pry'
 
-module Elasticsearch
+module LegacyElasticsearch
 
   module API
 

@@ -23,15 +23,15 @@ Turn.config.format = :pretty
 
 # Launch test cluster
 #
-if ENV['SERVER'] and not Elasticsearch::Extensions::Test::Cluster.running?
+if ENV['SERVER'] and not LegacyElasticsearch::Extensions::Test::Cluster.running?
   es_params = "-D es.repositories.url.allowed_urls=http://snapshot.test* -D es.path.repo=/tmp -D es.node.testattr=test " + ENV['TEST_CLUSTER_PARAMS'].to_s
-  Elasticsearch::Extensions::Test::Cluster.start(nodes: 1, es_params: es_params )
+  LegacyElasticsearch::Extensions::Test::Cluster.start(nodes: 1, es_params: es_params )
 end
 
 # Register `at_exit` handler for server shutdown.
 # MUST be called before requiring `test/unit`.
 #
-at_exit { Elasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] and Elasticsearch::Extensions::Test::Cluster.running? }
+at_exit { LegacyElasticsearch::Extensions::Test::Cluster.stop if ENV['SERVER'] and LegacyElasticsearch::Extensions::Test::Cluster.running? }
 
 class String
   # Reset the `ansi` method on CI
@@ -80,7 +80,7 @@ tracer.formatter = proc { |severity, datetime, progname, msg| "#{msg}\n" }
 #     ruby -I lib:test -r ./tmp/my_special_client.rb test/integration/yaml_test_runner.rb
 #
 url = ENV.fetch('TEST_CLUSTER_URL', "http://localhost:#{ENV['TEST_CLUSTER_PORT'] || 9250}")
-$client ||= Elasticsearch::Client.new url: url
+$client ||= LegacyElasticsearch::Client.new url: url
 
 $client.transport.logger = logger unless ENV['QUIET'] || ENV['CI']
 # $client.transport.tracer = tracer if ENV['CI']
@@ -129,7 +129,7 @@ module Shoulda
   end
 end
 
-module Elasticsearch
+module LegacyElasticsearch
   module YamlTestSuite
     $last_response = ''
     $results = {}
@@ -274,7 +274,7 @@ module Elasticsearch
   end
 end
 
-include Elasticsearch::YamlTestSuite
+include LegacyElasticsearch::YamlTestSuite
 
 rest_api_test_source = $client.info['version']['number'] < '2' ? '../../../../tmp/elasticsearch/rest-api-spec/test' : '../../../../tmp/elasticsearch/rest-api-spec/src/main/resources/rest-api-spec/test'
 PATH    = Pathname(ENV.fetch('TEST_REST_API_SPEC', File.expand_path(rest_api_test_source, __FILE__)))
@@ -283,9 +283,9 @@ suites  = Dir.glob(PATH.join('*')).map { |d| Pathname(d) }
 suites  = suites.select { |s| s.to_s =~ Regexp.new(ENV['FILTER']) } if ENV['FILTER']
 
 suites.each do |suite|
-  name = Elasticsearch::YamlTestSuite::Utils.titleize(suite.basename)
+  name = LegacyElasticsearch::YamlTestSuite::Utils.titleize(suite.basename)
 
-  Elasticsearch::YamlTestSuite::Runner.in_context name do
+  LegacyElasticsearch::YamlTestSuite::Runner.in_context name do
 
     # --- Register context setup -------------------------------------------
     #

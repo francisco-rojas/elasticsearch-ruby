@@ -72,7 +72,7 @@ module Backup
     #     PATH = '/path/to/backup/'
     #
     #     require 'elasticsearch'
-    #     client  = Elasticsearch::Client.new log: true
+    #     client  = LegacyElasticsearch::Client.new log: true
     #     payload = []
     #
     #     Dir[ File.join( PATH, '**', '*.json' ) ].each do |file|
@@ -129,7 +129,7 @@ module Backup
       end
 
       def client
-        @client ||= ::Elasticsearch::Client.new url: url, logger: logger
+        @client ||= ::LegacyElasticsearch::Client.new url: url, logger: logger
       end
 
       def path

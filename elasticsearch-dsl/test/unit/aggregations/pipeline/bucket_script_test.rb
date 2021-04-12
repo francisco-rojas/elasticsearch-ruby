@@ -1,10 +1,10 @@
 require 'test_helper'
 
-module Elasticsearch
+module LegacyElasticsearch
   module Test
     module Aggregations
       class BucketScriptTest < ::Test::Unit::TestCase
-        include Elasticsearch::DSL::Search::Aggregations
+        include LegacyElasticsearch::DSL::Search::Aggregations
 
         context "Bucket Script agg" do
           subject { BucketScript.new }

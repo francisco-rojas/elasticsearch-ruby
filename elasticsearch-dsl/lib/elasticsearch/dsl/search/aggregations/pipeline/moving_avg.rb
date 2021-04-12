@@ -1,9 +1,9 @@
-module Elasticsearch
+module LegacyElasticsearch
   module DSL
     module Search
       module Aggregations
 
-        # Given an ordered series of data, the Moving Average aggregation will slide a window across the data and emit the average value of that window. 
+        # Given an ordered series of data, the Moving Average aggregation will slide a window across the data and emit the average value of that window.
         #
         # @example Passing the options as a Hash
         #

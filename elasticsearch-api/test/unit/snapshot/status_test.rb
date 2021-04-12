@@ -1,6 +1,6 @@
 require 'test_helper'
 
-module Elasticsearch
+module LegacyElasticsearch
   module Test
     class SnapshotStatusTest < ::Test::Unit::TestCase
 

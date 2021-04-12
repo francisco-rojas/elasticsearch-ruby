@@ -62,7 +62,7 @@
 * Improved the documentation for the "Backup" extension and added it to the main README
 * Added the information about the "Reindex" extension to the README
 * Added a reindex extension
-* Improved the `Elasticsearch::Extensions::Test::Cluster` extension
+* Improved the `LegacyElasticsearch::Extensions::Test::Cluster` extension
 
 ## 1.0.17
 
@@ -270,8 +270,8 @@
 * Added the "Cat Segments" API
 * Updated the code and documentation for the "Cluster State" API
 * Fixed incorrect examples for the "Percolate" API
-* Added a `Elasticsearch::API.settings` method for accessing module settings
-* Added a `Elasticsearch::API.settings[:skip_parameter_validation]` setting support into `__validate_and_extract_params`
+* Added a `LegacyElasticsearch::API.settings` method for accessing module settings
+* Added a `LegacyElasticsearch::API.settings[:skip_parameter_validation]` setting support into `__validate_and_extract_params`
 * Added `master_timeout` parameters to the "Template Exists" and "Get Template" APIs
 * Fixed incorrect encoding of Array parameters
 * Added support for the `metric` parameter in the "Nodes Info" API
@@ -403,4 +403,4 @@
 
 ### Extensions
 
-* Improved the documentation for `Elasticsearch::Extensions::Test::Cluster`
+* Improved the documentation for `LegacyElasticsearch::Extensions::Test::Cluster`

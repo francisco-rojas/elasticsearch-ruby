@@ -1,19 +1,19 @@
 require 'test_helper'
 
-module Elasticsearch
+module LegacyElasticsearch
   module Test
     class UtilsTest < ::Test::Unit::TestCase
       context "Utils" do
         should "convert a string to camelcase" do
-          assert_equal 'Foo', Elasticsearch::DSL::Utils.__camelize('foo')
+          assert_equal 'Foo', LegacyElasticsearch::DSL::Utils.__camelize('foo')
         end
 
         should "convert an underscored string to camelcase" do
-          assert_equal 'FooBar', Elasticsearch::DSL::Utils.__camelize('foo_bar')
+          assert_equal 'FooBar', LegacyElasticsearch::DSL::Utils.__camelize('foo_bar')
         end
 
         should "convert a symbol" do
-          assert_equal 'FooBar', Elasticsearch::DSL::Utils.__camelize(:foo_bar)
+          assert_equal 'FooBar', LegacyElasticsearch::DSL::Utils.__camelize(:foo_bar)
         end
       end
     end

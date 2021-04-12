@@ -1,4 +1,4 @@
-# Elasticsearch::Extensions
+# LegacyElasticsearch::Extensions
 
 This library provides a set of extensions to the
 [`elasticsearch`](https://github.com/elasticsearch/elasticsearch-ruby) Rubygem.
@@ -68,8 +68,8 @@ a `reindex` method is added to the client:
     require 'elasticsearch'
     require 'elasticsearch/extensions/reindex'
 
-    client = Elasticsearch::Client.new
-    target_client = Elasticsearch::Client.new url: 'http://localhost:9250', log: true
+    client = LegacyElasticsearch::Client.new
+    target_client = LegacyElasticsearch::Client.new url: 'http://localhost:9250', log: true
 
     client.index index: 'test', type: 'd', body: { title: 'foo' }
 
@@ -91,15 +91,15 @@ You can also use the `Reindex` class directly:
     require 'elasticsearch'
     require 'elasticsearch/extensions/reindex'
 
-    client = Elasticsearch::Client.new
+    client = LegacyElasticsearch::Client.new
 
-    reindex = Elasticsearch::Extensions::Reindex.new \
+    reindex = LegacyElasticsearch::Extensions::Reindex.new \
                 source: { index: 'test', client: client },
                 target: { index: 'test-copy' }
 
     reindex.perform
 
-See more information in the [`Elasticsearch::Extensions::Reindex::Reindex`](lib/extensions/reindex.rb)
+See more information in the [`LegacyElasticsearch::Extensions::Reindex::Reindex`](lib/extensions/reindex.rb)
 class documentation.
 
 ### ANSI
@@ -109,12 +109,12 @@ Colorize and format selected  Elasticsearch response parts in terminal:
 Display formatted search results:
 
     require 'elasticsearch/extensions/ansi'
-    puts Elasticsearch::Client.new.search.to_ansi
+    puts LegacyElasticsearch::Client.new.search.to_ansi
 
 Display a table with the output of the `_analyze` API:
 
     require 'elasticsearch/extensions/ansi'
-    puts Elasticsearch::Client.new.indices.analyze(text: 'Quick Brown Fox Jumped').to_ansi
+    puts LegacyElasticsearch::Client.new.indices.analyze(text: 'Quick Brown Fox Jumped').to_ansi
 
 [Full documentation](http://rubydoc.info/gems/elasticsearch-extensions/Elasticsearch/Extensions/ANSI)
 
@@ -128,14 +128,14 @@ Start and stop the default cluster:
 
     require 'elasticsearch/extensions/test/cluster'
 
-    Elasticsearch::Extensions::Test::Cluster.start
-    Elasticsearch::Extensions::Test::Cluster.stop
+    LegacyElasticsearch::Extensions::Test::Cluster.start
+    LegacyElasticsearch::Extensions::Test::Cluster.stop
 
 Start the cluster on specific port, with a specific Elasticsearch version, number of nodes and cluster name:
 
     require 'elasticsearch/extensions/test/cluster'
 
-    Elasticsearch::Extensions::Test::Cluster.start \
+    LegacyElasticsearch::Extensions::Test::Cluster.start \
       cluster_name: "my-testing-cluster",
       command:      "/usr/local/Cellar/elasticsearch/0.90.10/bin/elasticsearch",
       port:         9350,
@@ -155,7 +155,7 @@ Stop this cluster:
 
     require 'elasticsearch/extensions/test/cluster'
 
-    Elasticsearch::Extensions::Test::Cluster.stop port: 9350
+    LegacyElasticsearch::Extensions::Test::Cluster.stop port: 9350
 
     # Stopping Elasticsearch nodes... stopped PID 54469. stopped PID 54470. stopped PID 54468.
     # # => [54469, 54470, 54468]
@@ -167,7 +167,7 @@ You can control the cluster configuration with environment variables as well:
     TEST_CLUSTER_PORT=9350 \
     TEST_CLUSTER_NODES=3 \
     TEST_CLUSTER_NAME=my_testing_cluster \
-    ruby -r elasticsearch -e "require 'elasticsearch/extensions/test/cluster'; Elasticsearch::Extensions::Test::Cluster.start"
+    ruby -r elasticsearch -e "require 'elasticsearch/extensions/test/cluster'; LegacyElasticsearch::Extensions::Test::Cluster.start"
 
 To prevent deleting data and configurations when the cluster is started, for example in a development environment,
 use the `clear_cluster: false` option or the `TEST_CLUSTER_CLEAR=false` environment variable.
@@ -191,7 +191,7 @@ and stopping it afterwards.
 Example of handler registration:
 
     class MyTest < Test::Unit::TestCase
-      extend Elasticsearch::Extensions::Test::StartupShutdown
+      extend LegacyElasticsearch::Extensions::Test::StartupShutdown
 
       startup  { puts "Suite starting up..." }
       shutdown { puts "Suite shutting down..." }
@@ -213,7 +213,7 @@ Let's define a simple profiling test in a `profiling_test.rb` file:
     require 'elasticsearch/extensions/test/profiling'
 
     class ProfilingTest < Test::Unit::TestCase
-      extend Elasticsearch::Extensions::Test::Profiling
+      extend LegacyElasticsearch::Extensions::Test::Profiling
 
       context "Mathematics" do
         measure "divide numbers", count: 10_000 do

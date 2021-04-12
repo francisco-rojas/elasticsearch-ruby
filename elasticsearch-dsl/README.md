@@ -1,4 +1,4 @@
-# Elasticsearch::DSL
+# LegacyElasticsearch::DSL
 
 The `elasticsearch-dsl` library provides a Ruby API for
 the [Elasticsearch Query DSL](http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/query-dsl.html).
@@ -32,7 +32,7 @@ Let's have a simple example using the declarative variant:
 
 ```ruby
 require 'elasticsearch/dsl'
-include Elasticsearch::DSL
+include LegacyElasticsearch::DSL
 
 definition = search do
   query do
@@ -44,7 +44,7 @@ definition.to_hash
 # => { query: { match: { title: "test"} } }
 
 require 'elasticsearch'
-client = Elasticsearch::Client.new trace: true
+client = LegacyElasticsearch::Client.new trace: true
 
 client.search body: definition
 # curl -X GET 'http://localhost:9200/test/_search?pretty' -d '{
@@ -62,7 +62,7 @@ Let's build the same definition in a more imperative fashion:
 
 ```ruby
 require 'elasticsearch/dsl'
-include Elasticsearch::DSL
+include LegacyElasticsearch::DSL
 
 definition = Search::Search.new
 definition.query = Search::Queries::Match.new title: 'test'
@@ -76,7 +76,7 @@ building search definitions in Ruby. This makes it possible to use it with any E
 
 ```ruby
 require 'elasticsearch/dsl'
-include Elasticsearch::DSL
+include LegacyElasticsearch::DSL
 
 definition = search { query { match title: 'test' } }
 
@@ -122,9 +122,9 @@ require 'awesome_print'
 require 'elasticsearch'
 require 'elasticsearch/dsl'
 
-include Elasticsearch::DSL
+include LegacyElasticsearch::DSL
 
-client = Elasticsearch::Client.new transport_options: { request: { timeout: 3600, open_timeout: 3600 } }
+client = LegacyElasticsearch::Client.new transport_options: { request: { timeout: 3600, open_timeout: 3600 } }
 
 puts "Recovering the 'bicycles.stackexchange.com' index...".yellow
 

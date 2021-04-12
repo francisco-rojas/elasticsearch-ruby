@@ -5,7 +5,7 @@ require 'elasticsearch/transport/version'
 
 Gem::Specification.new do |s|
   s.name          = "elasticsearch-transport"
-  s.version       = Elasticsearch::Transport::VERSION
+  s.version       = LegacyElasticsearch::Transport::VERSION
   s.authors       = ["Karel Minarik"]
   s.email         = ["karel.minarik@elasticsearch.org"]
   s.summary       = "Ruby client for Elasticsearch."

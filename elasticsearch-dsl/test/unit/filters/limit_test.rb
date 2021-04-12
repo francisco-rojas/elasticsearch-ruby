@@ -1,10 +1,10 @@
 require 'test_helper'
 
-module Elasticsearch
+module LegacyElasticsearch
   module Test
     module Filters
       class LimitTest < ::Test::Unit::TestCase
-        include Elasticsearch::DSL::Search::Filters
+        include LegacyElasticsearch::DSL::Search::Filters
 
         context "Limit filter" do
           subject { Limit.new }
